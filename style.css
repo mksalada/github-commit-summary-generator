@@ -43,6 +43,7 @@ input, select, button {
   border: 1px solid var(--border);
   background: var(--card);
   color: var(--text);
+  font-size: 1rem;
 }
 
 button {
@@ -53,6 +54,15 @@ button {
 .toggle {
   width: auto;
   float: right;
+  margin-bottom: 1rem;
+}
+
+/* Subtitle */
+.subtitle {
+  color: var(--muted);
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
 }
 
 /* Alerts */
@@ -61,27 +71,51 @@ button {
   border-radius: 8px;
   margin-bottom: 1rem;
   border: 1px solid var(--border);
+  transition: box-shadow 0.3s ease;
 }
 
 .alert.warning {
   border-color: #facc15;
-  box-shadow: 0 0 12px rgba(250,204,21,0.25);
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.25);
 }
 
 .alert.danger {
   border-color: #f87171;
-  box-shadow: 0 0 14px rgba(248,113,113,0.3);
+  box-shadow: 0 0 14px rgba(248, 113, 113, 0.3);
 }
 
-/* Output */
+/* Output panel */
 .output-panel {
   min-height: 300px;
   padding: 1rem;
   border: 1px solid var(--border);
   border-radius: 8px;
   white-space: pre-wrap;
+  overflow-x: auto;
+  background: var(--card);
 }
 
 .placeholder {
   color: var(--muted);
+}
+
+/* Footer */
+.footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  input, select, button {
+    font-size: 0.95rem;
+  }
 }
