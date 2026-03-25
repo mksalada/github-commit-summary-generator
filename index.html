@@ -13,34 +13,43 @@
 
 <div class="container">
 
-<button class="toggle" id="themeToggle">🌙</button>
+  <button class="toggle" id="themeToggle">🌙</button>
 
-<h1>GitSum</h1>
+  <h1>GitSum</h1>
+  <p class="subtitle">
+    Generate clean commit summaries from any GitHub repository.
+  </p>
 
-<div id="rateLimitBox" class="alert info">
-  ℹ️ Using public GitHub API (60 requests/hour)
-</div>
+  <div id="rateLimitBox" class="alert info">
+    ℹ️ Using public GitHub API (60 requests/hour)
+  </div>
 
-<label for="repo">Repository</label>
-<input id="repo" placeholder="username/repo" aria-label="GitHub repository">
+  <label for="repo">Repository</label>
+  <input id="repo" placeholder="username/repo" aria-label="GitHub repository">
 
-<label for="branch">Branch</label>
-<select id="branch" aria-label="Select branch"></select>
+  <label for="branch">Branch</label>
+  <select id="branch" aria-label="Select branch"></select>
 
-<label for="format">Export Format</label>
-<select id="format">
-  <option value="md">Markdown</option>
-  <option value="json">JSON</option>
-  <option value="txt">Text</option>
-</select>
+  <label for="format">Export Format</label>
+  <select id="format">
+    <option value="md">Markdown</option>
+    <option value="json">JSON</option>
+    <option value="txt">Text</option>
+  </select>
 
-<button id="generate">Generate</button>
-<button id="download">Download</button>
+  <button id="generate">Generate</button>
+  <button id="download">Download</button>
 
-<h2>Preview</h2>
-<div id="output" class="output-panel" aria-live="polite">
-  <div class="placeholder">Your summary will appear here...</div>
-</div>
+  <h2>Preview</h2>
+  <div id="output" class="output-panel" aria-live="polite">
+    <div class="placeholder">Your summary will appear here...</div>
+  </div>
+
+  <footer class="footer">
+    <p>
+      Built with ❤️ using the GitHub REST API (public, unauthenticated).
+    </p>
+  </footer>
 
 </div>
 
