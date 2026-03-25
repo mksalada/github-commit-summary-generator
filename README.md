@@ -67,9 +67,9 @@ open index.html
 
 - [x] 🎨 UI/UX improvements
 - [x] 🌙 Dark mode
-- [] 📋 Copy to clipboard
-- [] 🔗 GitHub API integration (auto-fetch commits)
-- [] ⚙️ Custom summary formatting
+- [ ] 📋 Copy to clipboard
+- [ ] 🔗 GitHub API integration (auto-fetch commits)
+- [ ] ⚙️ Custom summary formatting
 
 ## 🤝 Contributing
 
