@@ -7,7 +7,6 @@ export function format(commits, type) {
   if (type === "json") return JSON.stringify(commits, null, 2);
 
   let out = "";
-
   for (const c of commits) {
     const date = c.commit.author.date.slice(0, 10);
     const msg = c.commit.message.split("\n")[0];
@@ -21,6 +20,5 @@ export function format(commits, type) {
       out += `${date} | ${msg} | ${author}\n`;
     }
   }
-
   return out;
 }
