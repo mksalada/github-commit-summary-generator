@@ -20,8 +20,10 @@
 
 ➡️ https://mksalada.github.io/gitsum/
 
-<!-- ## 📸 Preview
-![GitSum Preview](./preview.png) -->
+## 📸 Preview
+![GitSum Preview](./GitSum_preview.png)
+
+---
 
 ## 🛠️ How to Use
 
@@ -38,6 +40,8 @@
 - JSON (`.json`) → Structured data for apps/tools
 - Markdown (`.md`) → Perfect for README or documentation
 - Text (`.txt`) → Simple and portable
+
+---
 
 ## 🧪 Tech Stack
 
@@ -61,20 +65,18 @@ open index.html
 
 ## 🔮 Roadmap
 
-- 🎨 UI/UX improvements
-- 🌙 Dark mode
-- 📋 Copy to clipboard
-- 🔗 GitHub API integration (auto-fetch commits)
-- ⚙️ Custom summary formatting
+- [x] 🎨 UI/UX improvements
+- [x] 🌙 Dark mode
+- [] 📋 Copy to clipboard
+- [] 🔗 GitHub API integration (auto-fetch commits)
+- [] ⚙️ Custom summary formatting
 
 ## 🤝 Contributing
 
 Contributions, issues, and suggestions are welcome!
 
-<!-- ## 📄 License
-
-MIT License -->
+<!-- ## 📄 License -->
 
 ## 💡 Author
 
-Made with ❤️ by @mksalada
+Made with ❤️ by [tina](https://github.com/mksalada)
