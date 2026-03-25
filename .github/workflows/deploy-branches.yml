@@ -1,0 +1,32 @@
+name: Deploy Branches to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - uix-dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set folder name
+        run: echo "FOLDER=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+
+      - name: Prepare files
+        run: |
+          mkdir -p dist/$FOLDER
+          cp -r ./* dist/$FOLDER
+          rm -rf dist/$FOLDER/.git
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          keep_files: true
