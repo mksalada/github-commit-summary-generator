@@ -1,17 +1,18 @@
-export function setLoading(outputEl) {
-  outputEl.innerHTML = `<div class="placeholder fade-in">⏳ Fetching...</div>`;
+export function setLoading(el) {
+  el.innerHTML = `<div class="placeholder">⏳ Fetching...</div>`;
 }
 
-export function setError(outputEl, msg) {
-  outputEl.innerHTML = `<div class="placeholder fade-in">❌ ${msg}</div>`;
+export function setError(el, msg) {
+  el.innerHTML = `<div class="placeholder">❌ ${msg}</div>`;
 }
 
-export function setOutput(outputEl, text) {
-  outputEl.innerHTML = `<pre class="fade-in">${text}</pre>`;
+export function setOutput(el, text) {
+  el.innerHTML = `<pre>${text}</pre>`;
 }
 
 export function populateBranches(select, branches) {
   select.innerHTML = "";
+
   branches.forEach(b => {
     const opt = document.createElement("option");
     opt.value = b;
