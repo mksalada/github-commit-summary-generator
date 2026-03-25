@@ -1,3 +1,4 @@
+// js/main.js
 import { loadBranches, getAllCommits } from "./api.js";
 import { setLoading, setError, setOutput, populateBranches } from "./ui.js";
 import { format } from "./formatter.js";
@@ -7,11 +8,11 @@ const branchSelect = document.getElementById("branch");
 const outputEl = document.getElementById("output");
 const formatSelect = document.getElementById("format");
 
-// Rate limit handler
+// Rate limit indicator
 function updateRateLimit(res) {
   const box = document.getElementById("rateLimitBox");
-  const r = parseInt(res.headers.get("X-RateLimit-Remaining"));
-  const limit = res.headers.get("X-RateLimit-Limit");
+  const r = parseInt(res.headers.get("X-RateLimit-Remaining") || "0");
+  const limit = res.headers.get("X-RateLimit-Limit") || "?";
 
   box.classList.remove("warning", "danger");
 
@@ -33,7 +34,7 @@ document.getElementById("themeToggle").onclick = () => {
   html.setAttribute("data-theme", dark ? "light" : "dark");
 };
 
-// Load branches
+// Load branches when repo loses focus
 repoInput.addEventListener("blur", async () => {
   const repo = repoInput.value.trim();
   if (!repo) return;
@@ -41,12 +42,12 @@ repoInput.addEventListener("blur", async () => {
   try {
     const branches = await loadBranches(repo, updateRateLimit);
     populateBranches(branchSelect, branches);
-  } catch {
-    // ignore
+  } catch (err) {
+    setError(outputEl, err.message);
   }
 });
 
-// Generate
+// Generate commit summary
 document.getElementById("generate").onclick = async () => {
   const repo = repoInput.value.trim();
   const branch = branchSelect.value;
@@ -58,14 +59,20 @@ document.getElementById("generate").onclick = async () => {
   }
 
   if (!branch) {
-    setError(outputEl, "Select a branch first.");
-    return;
+    // Try to auto-load branches if none selected
+    try {
+      const branches = await loadBranches(repo, updateRateLimit);
+      populateBranches(branchSelect, branches);
+    } catch (err) {
+      setError(outputEl, err.message);
+      return;
+    }
   }
 
   setLoading(outputEl);
 
   try {
-    const commits = await getAllCommits(repo, branch, updateRateLimit);
+    const commits = await getAllCommits(repo, branchSelect.value, updateRateLimit);
     const result = format(commits, type);
     setOutput(outputEl, result);
   } catch (err) {
@@ -73,67 +80,30 @@ document.getElementById("generate").onclick = async () => {
   }
 };
 
-// Download
+// Download commit summary
 document.getElementById("download").onclick = () => {
-  const text = outputEl.innerText;
+  const text = outputEl.textContent;
   const type = formatSelect.value;
 
   if (!text.trim()) return;
 
-  const blob = new Blob([text]);
+  let mime = "text/plain";
+  let extension = "txt";
+
+  if (type === "md") {
+    mime = "text/markdown";
+    extension = "md";
+  } else if (type === "json") {
+    mime = "application/json";
+    extension = "json";
+  }
+
+  const blob = new Blob([text], { type: mime });
+
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `COMMITS.${type}`;
+  a.download = `COMMITS.${extension}`;
   a.click();
-};repoInput.addEventListener("blur", async () => {
-  const repo = repoInput.value.trim();
-  if (!repo) return;
 
-  try {
-    const branches = await loadBranches(repo, updateRateLimit);
-    populateBranches(branchSelect, branches);
-  } catch {
-    // ignore
-  }
-});
-
-// Generate
-document.getElementById("generate").onclick = async () => {
-  const repo = repoInput.value.trim();
-  const branch = branchSelect.value;
-  const type = formatSelect.value;
-
-  if (!repo) {
-    setError(outputEl, "Enter a repository first.");
-    return;
-  }
-
-  if (!branch) {
-    setError(outputEl, "Select a branch first.");
-    return;
-  }
-
-  setLoading(outputEl);
-
-  try {
-    const commits = await getAllCommits(repo, branch, updateRateLimit);
-    const result = format(commits, type);
-    setOutput(outputEl, result);
-  } catch (err) {
-    setError(outputEl, err.message);
-  }
-};
-
-// Download
-document.getElementById("download").onclick = () => {
-  const text = outputEl.innerText;
-  const type = formatSelect.value;
-
-  if (!text.trim()) return;
-
-  const blob = new Blob([text]);
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `COMMITS.${type}`;
-  a.click();
+  URL.revokeObjectURL(a.href);
 };
