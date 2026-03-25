@@ -1,4 +1,3 @@
-// js/main.js
 import { loadBranches, getAllCommits } from "./api.js";
 import { setLoading, setError, setOutput, populateBranches } from "./ui.js";
 import { format } from "./formatter.js";
@@ -8,7 +7,6 @@ const branchSelect = document.getElementById("branch");
 const outputEl = document.getElementById("output");
 const formatSelect = document.getElementById("format");
 
-// Rate limit indicator
 function updateRateLimit(res) {
   const box = document.getElementById("rateLimitBox");
   const r = parseInt(res.headers.get("X-RateLimit-Remaining") || "0");
@@ -27,14 +25,12 @@ function updateRateLimit(res) {
   }
 }
 
-// Theme toggle
 document.getElementById("themeToggle").onclick = () => {
   const html = document.documentElement;
   const dark = html.getAttribute("data-theme") === "dark";
   html.setAttribute("data-theme", dark ? "light" : "dark");
 };
 
-// Load branches when repo loses focus
 repoInput.addEventListener("blur", async () => {
   const repo = repoInput.value.trim();
   if (!repo) return;
@@ -47,7 +43,6 @@ repoInput.addEventListener("blur", async () => {
   }
 });
 
-// Generate commit summary
 document.getElementById("generate").onclick = async () => {
   const repo = repoInput.value.trim();
   const branch = branchSelect.value;
@@ -59,7 +54,6 @@ document.getElementById("generate").onclick = async () => {
   }
 
   if (!branch) {
-    // Try to auto-load branches if none selected
     try {
       const branches = await loadBranches(repo, updateRateLimit);
       populateBranches(branchSelect, branches);
@@ -80,7 +74,6 @@ document.getElementById("generate").onclick = async () => {
   }
 };
 
-// Download commit summary
 document.getElementById("download").onclick = () => {
   const text = outputEl.textContent;
   const type = formatSelect.value;
